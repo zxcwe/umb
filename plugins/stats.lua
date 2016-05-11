@@ -83,16 +83,36 @@ local function bot_stats()
   -- Users
   local hash = 'msgs:*:'..our_id
   local r = redis:eval(redis_scan, 1, hash)
-  local text = 'Users: '..r
+  local text = 'My groups: '..r
 
   hash = 'chat:*:users'
   r = redis:eval(redis_scan, 1, hash)
-  text = text..'\nGroups: '..r
+  text = text..'\nALL groups on server: '..r
   return text
 end
 local function run(msg, matches)
-  if matches[1]:lower() == 'teleseed' then -- Put everything you like :)
-    local about = _config.about_text
+  if matches[1]:lower() == 'ub' then -- Put everything you like :)
+    local about = [[Mega Ub v1.0
+An Advanced Administration The PowerFull Bot Based On TeleSeed Written In Lua
+
+Sudo Users : 
+
+Founder&Developer : @UB_redteam 
+
+Sponser&Manager : @S1KT1R
+
+Helper&Manager : @SoLiD021
+
+Our Channel :
+😎 @UB_CH 😎
+
+Special Thx To :
+Seed Team
+UB Team
+And All My Friend
+
+yon.ir/Xhpt]]
+
     local name = user_print_name(msg.from)
     savelog(msg.to.id, name.." ["..msg.from.id.."] used /teleseed ")
     return about
@@ -120,7 +140,7 @@ local function run(msg, matches)
         return
       end
     end
-    if matches[2] == "teleseed" then -- Put everything you like :)
+    if matches[2] == "ub" then -- Put everything you like :)
       if not is_admin(msg) then
         return "For admins only !"
       else
@@ -141,10 +161,9 @@ return {
     "^[!/]([Ss]tats)$",
     "^[!/]([Ss]tatslist)$",
     "^[!/]([Ss]tats) (group) (%d+)",
-    "^[!/]([Ss]tats) (teleseed)",-- Put everything you like :)
-		"^[!/]([Tt]eleseed)"-- Put everything you like :)
+    "^[!/]([Ss]tats) (ub)",
+    "^[!/]([Uu]b)"
     }, 
   run = run
 }
-
 end
