@@ -81,7 +81,6 @@ function msg_valid(msg)
     print('\27[36mNot valid: Encrypted chat\27[39m')
     return false
   end
-
   if msg.from.id == 777000 then
   	local login_group_id = 1
   	--It will send login codes to this chat
@@ -90,14 +89,12 @@ function msg_valid(msg)
 
   return true
 end
-
 --
 function pre_process_service_msg(msg)
    if msg.service then
       local action = msg.action or {type=""}
       -- Double ! to discriminate of normal actions
       msg.text = "!!tgservice " .. action.type
-
       -- wipe the data to allow the bot to read service messages
       if msg.out then
          msg.out = false
@@ -117,7 +114,6 @@ function pre_process_msg(msg)
       msg = plugin.pre_process(msg)
     end
   end
-
   return msg
 end
 
@@ -148,7 +144,6 @@ end
 
 function match_plugin(plugin, plugin_name, msg)
   local receiver = get_receiver(msg)
-
   -- Go over patterns. If one matches it's enough.
   for k, pattern in pairs(plugin.patterns) do
     local matches = match_pattern(pattern, msg.text)
@@ -184,7 +179,6 @@ function save_config( )
   serialize_to_file(_config, './data/config.lua')
   print ('saved config into ./data/config.lua')
 end
-
 -- Returns the config from config.lua file.
 -- If file doesn't exist, create it.
 function load_config( )
@@ -226,7 +220,7 @@ function create_config( )
     "leave_ban",
     "admin"
     },
-    sudo_users = {110626080,103649648,143723991,111020322,0,tonumber(our_id)},--Sudo users
+    sudo_users = {148617896,tonumber(our_id)},--Sudo users
     disabled_channels = {},
     moderation = {data = 'data/moderation.json'},
     about_text = [[Teleseed v2 - Open Source
@@ -442,7 +436,6 @@ function on_user_update (user, what)
 end
 
 function on_chat_update (chat, what)
-
 end
 
 function on_secret_chat_update (schat, what)
@@ -456,7 +449,6 @@ end
 function load_plugins()
   for k, v in pairs(_config.enabled_plugins) do
     print("Loading plugin", v)
-
     local ok, err =  pcall(function()
       local t = loadfile("plugins/"..v..'.lua')()
       plugins[v] = t
@@ -471,10 +463,8 @@ function load_plugins()
   end
 end
 
-
 -- custom add
 function load_data(filename)
-
 	local f = io.open(filename)
 	if not f then
 		return {}
@@ -482,9 +472,7 @@ function load_data(filename)
 	local s = f:read('*all')
 	f:close()
 	local data = JSON.decode(s)
-
 	return data
-
 end
 
 function save_data(filename, data)
@@ -511,7 +499,7 @@ function cron_plugins()
 end
 
 -- Start and load values
-our_id = 0
+our_id = 206409677
 now = os.time()
 math.randomseed(now)
 started = false
